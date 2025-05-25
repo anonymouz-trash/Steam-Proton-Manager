@@ -19,7 +19,6 @@ I'm not responsible for any damage. If unsure, make a backup before running this
 This tool runs perfect on Arch Linux.
 
 ## Usage
-
 ```
 "USAGE: $0 {"WINEPREFIX"} {"STEAM_COMPAT_DATA_PATH"}"
 
