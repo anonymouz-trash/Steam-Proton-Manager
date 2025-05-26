@@ -36,6 +36,7 @@ fonts    = Install core (f)onts
 vcrun    = Install Visual (C)++ Runtime 2015-2022
 dotnet   = Install .(N)ET 4.8
 ```
+> Tip: Copy this script as `steam-proton-manager`, without extension, to `/usr/local/bin` to make it globally available.
 
 ## Preview
 ![Steam Proton Manager - Menu](https://github.com/anonymouz-trash/steam-proton-manager/blob/main/preview.png?raw=true)
