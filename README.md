@@ -20,9 +20,22 @@ This tool runs perfect on Arch Linux.
 
 ## Usage
 ```
-"USAGE: $0 {"WINEPREFIX"} {"STEAM_COMPAT_DATA_PATH"}"
+USAGE: $0 {"STEAM_COMPAT_DATA_PATH"} {"shortcut"}
 
-"Example: $0 /home/$USER/.local/share/Steam/steamapps/compatdata/<appid>/pfx /home/$USER/.local/share/Steam/steamapps/compatdata/<appid>"
+Example: $0 /home/$USER/.local/share/Steam/steamapps/compatdata/<appid> c
 
-"Hint: Always use absolute paths!"
+Hint: Always use absolute paths! The 2nd parameter is optional.
+
+The 2nd paramater can be used as shortcut:
+control  = start Control Panel
+regedit  = start Regisitry Editor
+taskmgr  = start Task Manager
+winecfg  = start WINE-Configuration
+tricks   = start winetricks
+fonts    = Install core (f)onts
+vcrun    = Install Visual (C)++ Runtime 2015-2022
+dotnet   = Install .(N)ET 4.8
 ```
+
+## Preview
+![Steam Proton Manager - Menu](https://github.com/anonymouz-trash/steam-proton-manager/blob/main/preview.png?raw=true)

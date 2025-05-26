@@ -1,21 +1,32 @@
 #!/bin/bash
 
-WINE=$1
-STEAM=$2
+WINE="$1/pfx"
+STEAM=$1
+input=$2
 
 function usage(){
 	echo
-	echo "USAGE: $0 {"WINEPREFIX"} {"STEAM_COMPAT_DATA_PATH"}"
+	echo "USAGE: $0 {"STEAM_COMPAT_DATA_PATH"} {"shortcut"}"
 	echo
-	echo "Example: $0 /home/$USER/.local/share/Steam/steamapps/compatdata/<appid>/pfx /home/$USER/.local/share/Steam/steamapps/compatdata/<appid>"
+	echo "Example: $0 /home/$USER/.local/share/Steam/steamapps/compatdata/<appid> c"
 	echo
-	echo "Hint: Always use absolute paths!"
+	echo "Hint: Always use absolute paths! The 2nd parameter is optional."
+	echo
+	echo "The 2nd paramater can be used as shortcut:"
+	echo "control  = start Control Panel"
+	echo "regedit  = start Regisitry Editor"
+	echo "taskmgr  = start Task Manager"
+	echo "winecfg  = start WINE-Configuration"
+	echo "tricks   = start winetricks"
+	echo "fonts    = Install core (f)onts"
+	echo "vcrun    = Install Visual (C)++ Runtime 2015-2022"
+	echo "dotnet   = Install .(N)ET 4.8"
 	echo
 }
 
 if [ ! -d "${WINE}" ] && [ ! -d "${STEAM}" ]; then
 	usage
-	read -p "No Paramaters found or folder(s) do not exist. Press any key to exit."
+	echo "No Paramaters found or folder(s) do not exist. Exiting..."
 	exit
 else
 	if [ $(pgrep "wineserver" | wc -l ) -gt 0 ]; then
@@ -23,29 +34,51 @@ else
 		$(pkill -9 wineserver)
 		sleep 5
 	fi
-	clear
-	echo "WINEPREFIX=${WINE}"
-	echo "STEAM_COMPAT_DATA_PATH=${STEAM}"
-	echo
-	echo "What do you want to run?"
-	echo "{ (c)ontrol | (r)egedit | (t)askmgr | (w)inecfg }"
-	echo
-	read -p "#> " input
+	if [ -z "${input}" ]; then
+		echo
+		echo "CHECK IF SHOWN PATHS ARE CORRECT:"
+		echo
+		echo "WINEPREFIX=${WINE}"
+		echo "STEAM_COMPAT_DATA_PATH=${STEAM}"
+		echo
+		echo "What do you want to run?"
+		echo "{ (c)ontrol | (r)egedit | (t)askmgr | (w)inecfg | w(i)netricks }"
+		echo
+		echo "For winetricks:"
+		echo "(i)  Just launch winetricks GUI"
+		echo "(if) Install core (f)onts"
+		echo "(ic) Install Visual (C)++ Runtime 2015-2022"
+		echo "(in) Install .(N)ET 4.8"
+		echo
+		read -p "#> " input
+	fi
 	case $input in
-		c)
+		(c | control)
 			$(WINEPREFIX=${WINE} STEAM_COMPAT_DATA_PATH=${STEAM} wine control)
 			;;
-		r)
+		(r | regedit)
 			$(WINEPREFIX=${WINE} STEAM_COMPAT_DATA_PATH=${STEAM} wine regedit)
 			;;
-		t)
+		(t | taskmgr)
 			$(WINEPREFIX=${WINE} STEAM_COMPAT_DATA_PATH=${STEAM} wine taskmgr)
 			;;
-		w)
+		(w | winecfg)
 			$(WINEPREFIX=${WINE} STEAM_COMPAT_DATA_PATH=${STEAM} winecfg)
+			;;
+		(i | tricks)
+			$(WINEPREFIX=${WINE} winetricks prefix=${STEAM})
+			;;
+		(if | fonts)
+			$(WINEPREFIX=${WINE} winetricks prefix=${STEAM} -q -v corefonts)
+			;;
+		(ic | vcrun)
+			$(WINEPREFIX=${WINE} winetricks prefix=${STEAM} -q -v vcrun2022)
+			;;
+		(in | dotnet)
+			$(WINEPREFIX=${WINE} winetricks prefix=${STEAM} -q -v dotnet48)
 			;;
 		*)
 
 	esac
 fi
-unset WINE STEAM
+unset WINE STEAM input
