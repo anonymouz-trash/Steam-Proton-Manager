@@ -1,4 +1,4 @@
-# STEAM-Proton-Manager
+# Steam-Proton-Manager
 
 ## Why?
 
