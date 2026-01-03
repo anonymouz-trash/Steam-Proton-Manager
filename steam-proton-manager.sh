@@ -3,16 +3,18 @@
 WINE="$1/pfx"
 STEAM=$1
 input=$2
+app=$3
 
 function usage(){
 	echo
-	echo "USAGE: $0 {"STEAM_COMPAT_DATA_PATH"} {"shortcut"}"
+	echo "USAGE: $0 {"STEAM_COMPAT_DATA_PATH"} {"shortcut"} optional: {"app"}"
 	echo
 	echo "Example: $0 /home/$USER/.local/share/Steam/steamapps/compatdata/<appid> c"
 	echo
 	echo "Hint: Always use absolute paths! The 2nd parameter is optional."
 	echo
 	echo "The 2nd paramater can be used as shortcut:"
+	echo "run      = start application within prefix"
 	echo "control  = start Control Panel"
 	echo "regedit  = start Regisitry Editor"
 	echo "taskmgr  = start Task Manager"
@@ -42,7 +44,7 @@ else
 		echo "STEAM_COMPAT_DATA_PATH=${STEAM}"
 		echo
 		echo "What do you want to run?"
-		echo "{ (c)ontrol | (r)egedit | (t)askmgr | (w)inecfg | w(i)netricks }"
+		echo "{ (run) wine | (c)ontrol | (r)egedit | (t)askmgr | (w)inecfg | w(i)netricks }"
 		echo
 		echo "For winetricks:"
 		echo "(i)  Just launch winetricks GUI"
@@ -53,6 +55,9 @@ else
 		read -p "#> " input
 	fi
 	case $input in
+		(run | wine)
+			$(WINEPREFIX=${WINE} STEAM_COMPAT_DATA_PATH=${STEAM} wine ${app})
+			;;
 		(c | control)
 			$(WINEPREFIX=${WINE} STEAM_COMPAT_DATA_PATH=${STEAM} wine control)
 			;;

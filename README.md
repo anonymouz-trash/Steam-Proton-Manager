@@ -27,6 +27,7 @@ Example: $0 /home/$USER/.local/share/Steam/steamapps/compatdata/<appid> c
 Hint: Always use absolute paths! The 2nd parameter is optional.
 
 The 2nd paramater can be used as shortcut:
+run      = start application within prefix
 control  = start Control Panel
 regedit  = start Regisitry Editor
 taskmgr  = start Task Manager
